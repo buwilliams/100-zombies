@@ -1,5 +1,7 @@
 require 'gosu'
 
+$DEBUG = false
+
 class BraveGirl
   def initialize(window_width, window_height)
     @window_width = window_width
@@ -10,10 +12,11 @@ class BraveGirl
     @y = 0
     @color = Gosu::Color::BLACK
 
-    @direction = Gosu::KB_LEFT
     @speed = 5
     @frame_count = 0
-    @running = true
+
+    @direction = Gosu::KB_RIGHT
+    @running = false
     @jumping = false
 
     @idle_frame_change = 100
@@ -107,20 +110,33 @@ class BraveGirl
       if @direction == Gosu::KB_RIGHT
         @run[@run_pointer].draw(@x, @y, 0, 1.0, 1.0)
       else
-        @run[@run_pointer].draw(@x, @y, 0, -1.0, 1.0)
+        @run[@run_pointer].draw(@x + @width, @y, 0, -1.0, 1.0)
       end
     elsif @jumping
       if @direction == Gosu::KB_RIGHT
         @fall.draw(@x, @y, 0, 1.0, 1.0)
       else
-        @fall.draw(@x, @y, 0, -1.0, 1.0)
+        @fall.draw(@x + @width, @y, 0, -1.0, 1.0)
       end
     else
       if @direction == Gosu::KB_RIGHT
         @idle[@idle_pointer].draw(@x, @y, 0, 1.0, 1.0)
       else
-        @idle[@idle_pointer].draw(@x, @y, 0, -1.0, 1.0)
+        @idle[@idle_pointer].draw(@x + @width, @y, 0, -1.0, 1.0)
       end
     end
+    draw_border
+  end
+
+  private
+
+  def draw_border
+    return unless $DEBUG
+    Gosu::draw_line(@x, @y, @color, @x + @width, @y, @color)
+    Gosu::draw_line(@x + @width, @y, @color, @x + @width, @y + @height, @color)
+    Gosu::draw_line(@x + @width, @y + @width, @color,
+                    @x, @y + @height, @color)
+    Gosu::draw_line(@x, @y + @height, @color,
+                    @x, @y, @color)
   end
 end
