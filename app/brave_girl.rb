@@ -18,7 +18,7 @@ class BraveGirl < Sprite
     @running = false
     @jumping = false
 
-    @idle_frame_change = 100
+    @idle_frame_change = 10
     @idle_pointer = 0
     @idle = [
       Gosu::Image.new("app/assets/adventure_girl/Idle (1).png"),
@@ -91,7 +91,6 @@ class BraveGirl < Sprite
         @run_pointer += 1
         @run_pointer = 0 if @run_pointer > (@run.size - 1)
         @frame_count = 0
-        # puts "Run sprite change #{@run_pointer}"
       end
     else
       # setup idle_pointer
@@ -99,7 +98,6 @@ class BraveGirl < Sprite
         @idle_pointer += 1
         @idle_pointer = 0 if @idle_pointer > (@idle.size - 1)
         @frame_count = 0
-        # puts "Idle sprite change #{@idle_pointer}"
       end
     end
   end
