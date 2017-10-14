@@ -1,8 +1,7 @@
 require 'gosu'
+require_relative './sprite.rb'
 
-$DEBUG = false
-
-class BraveGirl
+class BraveGirl < Sprite
   def initialize(window_width, window_height)
     @window_width = window_width
     @window_height = window_height
@@ -34,7 +33,7 @@ class BraveGirl
       Gosu::Image.new("app/assets/adventure_girl/Idle (10).png")
     ]
 
-    @run_frame_change = 3
+    @run_frame_change = 2
     @run_pointer = 0
     @run = [
       Gosu::Image.new("app/assets/adventure_girl/Run (1).png"),
@@ -126,17 +125,5 @@ class BraveGirl
       end
     end
     draw_border
-  end
-
-  private
-
-  def draw_border
-    return unless $DEBUG
-    Gosu::draw_line(@x, @y, @color, @x + @width, @y, @color)
-    Gosu::draw_line(@x + @width, @y, @color, @x + @width, @y + @height, @color)
-    Gosu::draw_line(@x + @width, @y + @width, @color,
-                    @x, @y + @height, @color)
-    Gosu::draw_line(@x, @y + @height, @color,
-                    @x, @y, @color)
   end
 end
