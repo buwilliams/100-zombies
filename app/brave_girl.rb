@@ -10,10 +10,11 @@ class BraveGirl
     @y = 0
     @color = Gosu::Color::BLACK
 
-    @direction_right = true
+    @direction = Gosu::KB_LEFT
     @speed = 5
     @frame_count = 0
     @running = true
+    @jumping = false
 
     @idle_frame_change = 100
     @idle_pointer = 0
@@ -42,6 +43,8 @@ class BraveGirl
       Gosu::Image.new("app/assets/adventure_girl/Run (7).png"),
       Gosu::Image.new("app/assets/adventure_girl/Run (8).png")
     ]
+
+    @fall = Gosu::Image.new("app/assets/adventure_girl/Jump (5).png")
   end
 
   def update
@@ -51,23 +54,28 @@ class BraveGirl
     if Gosu::button_down?(Gosu::KB_W)
       @y -= @speed #@height # up
       @frame_count = 0 if !@running
-      @running = true
+      @running = false
+      @jumping = true
     elsif Gosu::button_down?(Gosu::KB_A)
       @x -= @speed #@width # left
       @frame_count = 0 if !@running
-      @direction_right = false
+      @direction = Gosu::KB_LEFT
       @running = true
+      @jumping = false
     elsif Gosu::button_down?(Gosu::KB_S)
       @y += @speed #@height # down
       @frame_count = 0 if !@running
-      @running = true
+      @running = false
+      @jumping = true
     elsif Gosu::button_down?(Gosu::KB_D)
       @x += @speed #@width # right
       @frame_count = 0 if !@running
-      @direction_right = true
+      @direction = Gosu::KB_RIGHT
       @running = true
+      @jumping = false
     else
       @running = false
+      @jumping = false
     end
 
     # constrain to window
@@ -81,7 +89,7 @@ class BraveGirl
         @run_pointer += 1
         @run_pointer = 0 if @run_pointer > (@run.size - 1)
         @frame_count = 0
-        puts "Run sprite change #{@run_pointer}"
+        # puts "Run sprite change #{@run_pointer}"
       end
     else
       # setup idle_pointer
@@ -89,21 +97,26 @@ class BraveGirl
         @idle_pointer += 1
         @idle_pointer = 0 if @idle_pointer > (@idle.size - 1)
         @frame_count = 0
-        puts "Idle sprite change #{@idle_pointer}"
+        # puts "Idle sprite change #{@idle_pointer}"
       end
     end
   end
 
   def draw
-    #Gosu.draw_rect(@x, @y, @width, @height, @color)
     if @running
-      if @direction_right
+      if @direction == Gosu::KB_RIGHT
         @run[@run_pointer].draw(@x, @y, 0, 1.0, 1.0)
       else
         @run[@run_pointer].draw(@x, @y, 0, -1.0, 1.0)
       end
+    elsif @jumping
+      if @direction == Gosu::KB_RIGHT
+        @fall.draw(@x, @y, 0, 1.0, 1.0)
+      else
+        @fall.draw(@x, @y, 0, -1.0, 1.0)
+      end
     else
-      if @direction_right
+      if @direction == Gosu::KB_RIGHT
         @idle[@idle_pointer].draw(@x, @y, 0, 1.0, 1.0)
       else
         @idle[@idle_pointer].draw(@x, @y, 0, -1.0, 1.0)
