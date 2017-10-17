@@ -65,16 +65,16 @@ class BraveGirl < BaseObject
     end
 
     if Gosu::button_down?(Gosu::KB_A)
-      #@x -= @speed #@width # left
-      add_force(-0.5, 0)
+      #@x -= 5 #@width # left
+      add_force(-0.6, 0)
       @frame_count = 0 if !@running
       @direction = Gosu::KB_LEFT
       @running = true
       @jumping = false
       button_pressed = true
     elsif Gosu::button_down?(Gosu::KB_D)
+      #@x += 5 #@width # right
       add_force(0.5, 0)
-      #@x += @speed #@width # right
       @frame_count = 0 if !@running
       @direction = Gosu::KB_RIGHT
       @running = true
@@ -86,12 +86,6 @@ class BraveGirl < BaseObject
       @running = false
       @jumping = false
     end
-
-    # constrain to window
-    @y = 0 if @y < 0
-    @y = @window_height - @height if (@height + @y) > @window_height
-    @x = 0 if @x < 0
-    @x = @window_width - @width if (@width + @x) > @window_width
 
     if @running
       if @frame_count == @run_frame_change

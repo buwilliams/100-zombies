@@ -97,4 +97,12 @@ class BaseObject
   def align_right
     @x = @window_width - @width
   end
+
+  def align_center
+    @x = (@window_width / 2) - (@width / 2)
+  end
+
+  def align_middle
+    @y = (@window_height / 2) - (@height / 2)
+  end
 end
