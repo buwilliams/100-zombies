@@ -1,6 +1,8 @@
-$DEBUG = true
+$DEBUG = false
 
 class BaseObject
+  attr_accessor :x, :y, :width, :height
+
   TOP_LEFT  = 1
   TOP_RIGHT = 2
   BOT_RIGHT = 3
@@ -13,6 +15,7 @@ class BaseObject
     @height = properties[:height] || 64
     @window_width = properties[:window_width]
     @window_height = properties[:window_height]
+    @color = properties[:color] || Gosu::Color::AQUA
   end
 
   def update
@@ -22,38 +25,13 @@ class BaseObject
   end
 
   def collide?(sprite)
-    return true if touch?(TOP_LEFT, sprite.corner(BOT_RIGHT))
-    return true if touch?(TOP_RIGHT, sprite.corner(BOT_LEFT))
-    return true if touch?(BOT_RIGHT, sprite.corner(TOP_LEFT))
-    return true if touch?(BOT_LEFT, sprite.corner(TOP_RIGHT))
-    return false
-  end
-
-  def touch?(position, cornerB)
-    cornerA = corner(position)
-
-    if position == TOP_LEFT
-      return true if cornerA[:x] <= cornerB[:x] && cornerA[:y] <= cornerB[:y]
-    elsif position == TOP_RIGHT
-      return true if cornerA[:x] >= cornerB[:x] && cornerA[:y] <= cornerB[:y]
-    elsif position == BOT_RIGHT
-      return true if cornerA[:x] >= cornerB[:x] && cornerA[:y] >= cornerB[:y]
-    elsif position == BOT_LEFT
-      return true if cornerA[:x] <= cornerB[:x] && cornerA[:y] >= cornerB[:y]
-    end
-
-    return false
-  end
-
-  def corner(position)
-    if position == TOP_LEFT
-      return {x: @x, y: @y}
-    elsif position == TOP_RIGHT
-      return {x: @x + @width, y: @y}
-    elsif position == BOT_RIGHT
-      return {x: @x + @width, y: @y + @height}
-    elsif position == BOT_LEFT
-      return {x: @x, y: @y + @height}
+    if @x < sprite.x + sprite.width &&
+       @x + @width > sprite.x &&
+       @y < sprite.y + sprite.height &&
+       @height + @y > sprite.y
+      return true
+    else
+      return false
     end
   end
 

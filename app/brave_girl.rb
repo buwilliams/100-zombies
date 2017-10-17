@@ -3,9 +3,7 @@ require_relative './base_object.rb'
 
 class BraveGirl < BaseObject
   def initialize(properties)
-    super({ x: 0, y: 0, width: 64, height: 64 }.merge(properties))
-
-    @color = Gosu::Color::BLACK
+    super({ x: 0, y: 0, width: 52, height: 52 }.merge(properties))
 
     @speed = 5
     @frame_count = 0

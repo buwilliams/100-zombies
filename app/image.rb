@@ -12,5 +12,6 @@ class Image < BaseObject
 
   def draw
     @image.draw(@x, @y, @z, @scale_x, @scale_y)
+    draw_border
   end
 end
