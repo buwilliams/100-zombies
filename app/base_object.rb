@@ -1,7 +1,7 @@
 $DEBUG = false
 
 class BaseObject
-  attr_accessor :x, :y, :width, :height
+  attr_accessor :x, :y, :width, :height, :velocity, :acceleration
 
   TOP_LEFT  = 1
   TOP_RIGHT = 2
