@@ -5,7 +5,7 @@ class BraveGirl < BaseObject
   def initialize(properties)
     super({ x: 0, y: 0, width: 52, height: 52 }.merge(properties))
 
-    @speed = 5
+    @speed = -2
     @frame_count = 0
 
     @direction = Gosu::KB_RIGHT
@@ -49,13 +49,15 @@ class BraveGirl < BaseObject
     button_pressed = false
 
     if Gosu::button_down?(Gosu::KB_W)
-      @y -= @speed #@height # up
+      add_force(0, -2)
+      #@y -= @speed #@height # up
       @frame_count = 0 if !@running
       @running = false
       @jumping = true
       button_pressed = true
     elsif Gosu::button_down?(Gosu::KB_S)
-      @y += @speed #@height # down
+      add_force(0, 0)
+      #@y += @speed #@height # down
       @frame_count = 0 if !@running
       @running = false
       @jumping = true
@@ -63,14 +65,16 @@ class BraveGirl < BaseObject
     end
 
     if Gosu::button_down?(Gosu::KB_A)
-      @x -= @speed #@width # left
+      #@x -= @speed #@width # left
+      add_force(-0.5, 0)
       @frame_count = 0 if !@running
       @direction = Gosu::KB_LEFT
       @running = true
       @jumping = false
       button_pressed = true
     elsif Gosu::button_down?(Gosu::KB_D)
-      @x += @speed #@width # right
+      add_force(0.5, 0)
+      #@x += @speed #@width # right
       @frame_count = 0 if !@running
       @direction = Gosu::KB_RIGHT
       @running = true
@@ -103,6 +107,8 @@ class BraveGirl < BaseObject
         @frame_count = 0
       end
     end
+
+    super
   end
 
   def draw
@@ -126,6 +132,6 @@ class BraveGirl < BaseObject
       end
     end
 
-    draw_border
+    super
   end
 end

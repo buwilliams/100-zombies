@@ -3,6 +3,8 @@ require_relative './brave_girl.rb'
 require_relative './image.rb'
 
 class LevelOne
+  GRAVITY = 1.4
+
   def initialize(window_width, window_height)
     @window_width = window_width
     @window_height = window_height
@@ -35,12 +37,16 @@ class LevelOne
     current_x = @brave_girl.x
     current_y = @brave_girl.y
 
+    # apply gravity to brave girl
+    @brave_girl.add_force(0, GRAVITY)
     @brave_girl.update
+
     @items.each do |image|
       image.update
       if @brave_girl.collide? image
         @brave_girl.x = current_x
         @brave_girl.y = current_y
+        @brave_girl.reset_velocity
       end
     end
   end

@@ -16,12 +16,49 @@ class BaseObject
     @window_width = properties[:window_width]
     @window_height = properties[:window_height]
     @color = properties[:color] || Gosu::Color::AQUA
+    @velocity = properties[:velocity] || { x: 0, y: 0 }
+    @acceleration = properties[:velocity] || { x: 0, y: 0 }
   end
 
   def update
+    @velocity[:x] += @acceleration[:x]
+    @velocity[:y] += @acceleration[:y]
+
+    @x += @velocity[:x]
+    @y += @velocity[:y]
+
+    # constrain to window
+    if @y < 0
+      @y = 0
+      @velocity[:y] = 0
+    elsif (@height + @y) > @window_height
+      @y = @window_height - @height
+      @velocity[:y] = 0
+    end
+
+    if @x < 0
+      @x = 0
+      @velocity[:x] = 0
+    elsif (@width + @x) > @window_width
+      @x = @window_width - @width
+      @velocity[:x] = 0
+    end
+
+    @acceleration[:x] = 0
+    @acceleration[:y] = 0
   end
 
   def draw
+    draw_border
+  end
+
+  def add_force(x, y)
+    @acceleration[:x] += x
+    @acceleration[:y] += y
+  end
+
+  def reset_velocity
+    @velocity = { x: 0, y: 0 }
   end
 
   def collide?(sprite)
