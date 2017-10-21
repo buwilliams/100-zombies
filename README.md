@@ -4,5 +4,5 @@
 
 ## Versions
 
-v1 - First pass using Ruby and Gosu
-v2 - Second pass using Node & Phaser.io
+- v1 - First pass using Ruby and Gosu
+- v2 - Second pass using Node & Phaser.io
