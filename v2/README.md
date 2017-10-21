@@ -4,8 +4,8 @@
 
 ## Getting Started
 
-  `yarn install`
-  `yarn start`
+- `yarn install`
+- `yarn start`
 
 ## Create Sprite Sheets
 
