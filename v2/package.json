@@ -1,0 +1,15 @@
+{
+  "name": "100-Zombies",
+  "version": "1.0.0",
+  "description": "2d WebGL Platformer Game",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node ./src/index.js"
+  },
+  "repository": "https://github.com/buwilliams/100-zombies",
+  "author": "Buddy Williams<buddywilliams@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express.js": "^1.0.0"
+  }
+}
