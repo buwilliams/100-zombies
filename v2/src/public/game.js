@@ -13,6 +13,7 @@ var settings = {
 var platforms
 var braveGirl
 var cursors
+var facing = 'idle'
 
 function preload() {
   game.load.image('sky', 'assets/graveyard/bg.png')
@@ -79,14 +80,23 @@ function update() {
     //  Move to the left
     braveGirl.body.velocity.x = (-1 * settings.move)
     braveGirl.animations.play('left');
+    facing = 'left'
   } else if (cursors.right.isDown) {
     //  Move to the right
     braveGirl.body.velocity.x = settings.move
     braveGirl.animations.play('right');
+    facing = 'right'
   } else {
     //  Stand still
-    braveGirl.animations.stop();
-    braveGirl.frame = 4;
+    if (facing != 'idle') {
+      braveGirl.animations.stop();
+      if (facing == 'left') {
+        braveGirl.frame = 8
+      } else {
+        braveGirl.frame = 0
+      }
+      facing = 'idle'
+    }
   }
 
   //  Allow the player to jump if they are touching the ground.
